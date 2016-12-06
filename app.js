@@ -12,7 +12,9 @@ var router = express.Router();
 
 router.get('/', function(req, res) { });
 router.post('/', function(req, res) { });
-router.get('/:id', db.lookupPost, function(req, res) { });
+router.get('/:id', db.lookupPost, function(req, res) {
+	res.json(req.post);
+});
 router.patch('/:id', function(req, res) { });
 router.delete('/:id', function(req, res) { });
 
