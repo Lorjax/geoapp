@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>API Test</title>
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+		<style>
+			html, body, #map {
+				height: 100%;
+				width: 100%;
+			}
+			body {
+				margin:0px;
+				padding-top:0px;
+				padding-left: 0px;
+				padding-right: 0px;
+				padding-bottom: 0px;
+				}
+		</style>
+	</head>
+
+	<body>
+	<script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<div id="map"></div>
+
+		 
+
+		 <script type="text/javascript">
+		 	var openstreetmap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png',{
+				attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors | '
+				});
+		 	var map = L.map('map',{
+				center: [49.87,8.65],
+				zoom: 15,
+				crs: L.CRS.EPSG3857,
+				layers: openstreetmap,
+			});
+			
+			$.ajax({url: "http://localhost:3000/api/",
+					success: function(result) {
+						console.log("Leaflet: \n" + result);
+						L.geoJSON(result).addTo(map);
+					}});
+
+			
+		 </script>
+
+		 
+		 
+	</body>
+</html>
