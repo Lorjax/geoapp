@@ -2,6 +2,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
+var multer = require('multer');
+var upload = multer({dest: './uploads/'});
 
 var app = express();
 
@@ -14,11 +16,11 @@ var db = require('./queries');
 // Routes
 var router = express.Router();
 
-router.get('/', db.lookupPosts, function(req, res) {
-	res.json(req.post);
+router.get('/', db.lookupObjects, function(req, res) {
+	res.json(req.data);
 });
 
-router.post('/', jsonParser, db.insertPost, function(req, res) {
+router.post('/', upload.single('photo'), jsonParser, db.insertObject, function(req, res) {
 });
 
 router.get('/:id', db.lookupPost, function(req, res) {
