@@ -16,14 +16,10 @@ var db = require('./queries');
 // Routes
 var router = express.Router();
 
-router.get('/', db.lookupObjects, function(req, res) {
-	res.json(req.data);
-});
-
 router.post('/', upload.single('photo'), jsonParser, db.insertObject, function(req, res) {
 });
 
-router.get('/:id', db.lookupPost, function(req, res) {
+router.get('/:table', db.dbLookup, function(req, res) {
 	res.json(req.post);
 });
 

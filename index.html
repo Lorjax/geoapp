@@ -37,7 +37,12 @@
 				layers: openstreetmap,
 			});
 			
-			$.ajax({url: "http://localhost:3000/api/",
+			$.ajax({url: "http://localhost:3000/api/haltestelle",
+					success: function(result) {
+						console.log("Leaflet: \n" + result);
+						L.geoJSON(result).addTo(map);
+					}});
+			$.ajax({url: "http://localhost:3000/api/graffiti",
 					success: function(result) {
 						console.log("Leaflet: \n" + result);
 						L.geoJSON(result).addTo(map);

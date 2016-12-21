@@ -11,94 +11,35 @@ client.connect(function (err) {
 	if (err) console.log("FEHLER bei Verbindungsaufbau mit Datenbank!\n" + err);
 });
 
-function lookupPost(req, res, next) {
-	// Id aus params des request holen
-	var postId = req.params.id;
-	console.log("[DEBUG] SELECT");
-	console.log("[DEBUG] Angefragte ID: " + postId);
+function dbLookup(req, res, next) {
+	// Tablename aus params des request holen
+	var table = req.params.table;
 	// SQL-Statement mit Platzhalter $1 für id und Parsen zum Integer
-	var sql = 'SELECT * FROM Post WHERE id = $1::integer';
+	var sql = 'SELECT * FROM ' + table;
+	console.log("[DEBUG] SELECT: \n" + sql);
 	// Ausführen des Query
-	query = client.query(sql, [ postId ], function(err, results) {
+	query = client.query(sql, function(err, results) {
 		if(err) {
 			console.error(err);
 			res.statusCode = 500;
-			return res.json({ errors: "could not retrieve post" });
+			return res.json({ errors: "could not retrieve objects from table " + table });
 		}
 
 		if(results.rows.length === 0) {
 			res.statusCode = 404;
-			return res.json({ errors: "No Post found"});
+			return res.json({ errors: "No objects found in " + table});
 		}
-		req.post = geoJson.parse(results.rows[0], {Point: ['latitude', 'longitude']});
+		var data = [];
+		for(i = 0; i < results.rows.length; i++) {
+			data.push(results.rows[i])
+		}
+		req.post = geoJson.parse(data, {Point: ['latitude', 'longitude']});
 		console.log("GeoJSON: \n" + JSON.stringify(req.post));
 		next();
 	});
 
 }
 
-function lookupObjects(req, res, next) {
-	// Id aus params des request holen
-	console.log("[DEBUG] SELECT ALL");
-	var tablenames = ['graffiti', 'illegale_entsorgung', 'haltestelle',
-						'fahrradstaender', 'strassenschaden', 'givebox'];
-
-	var data = [];
-
-	for (j = 0; j < tablenames.length; j++) {
-		console.log("[DEBUG] Starte SQL QUERY auf " + tablenames[j]);
-		var sql = 'SELECT * FROM ' + tablenames[j];
-
-		query = client.query(sql, function(err, results) {
-			if(err) {
-				console.error(err);
-				res.statusCode = 500;
-				return res.json({errors: "could not lookup " + tablenames[j]});
-			}
-
-			if(results.rows.length === 0) {
-				res.statusCode = 404;
-				return res.json({errors: "nothing found in table " + tablenames[j]});
-			}
-
-			for(i = 0; i < results.rows.length; i++) {
-				data.push(results.rows[i]);
-			}
-
-			console.log("[DEBUG] gefundene Eintraege: " + results.rows.length);
-		});
-
-	}
-	console.log(data);
-	req.data = geoJson.parse(data, {Point: ['latitude', 'longitude']});
-	next();
-
-	// SQL-Statement mit Platzhalter $1 für id und Parsen zum Integer
-	// var sql = 'SELECT * FROM Post';
-	// // Ausführen des Query
-	// query = client.query(sql, function(err, results) {
-	// 	if(err) {
-	// 		console.error(err);
-	// 		res.statusCode = 500;
-	// 		return res.json({ errors: "could not retrieve posts" });
-	// 	}
-
-	// 	if(results.rows.length === 0) {
-	// 		res.statusCode = 404;
-	// 		return res.json({ errors: "No Posts found"});
-	// 	}
-	// 	var data = []
-	// 	for (i = 0; i < results.rows.length; i++) {
-	// 		data.push(results.rows[i]);
-	// 	}
-	// 	console.log(JSON.stringify(geoJson.parse(data, {Point: ['latitude', 'longitude']})));
-	// 	//console.log(results.rows[0]);
-	// 	req.post = geoJson.parse(data, {Point: ['latitude', 'longitude']});
-	// 	//req.post += geoJson.parse(data, {Point: ['latitude', 'longitude']});
-	// 	next();
-	// });
-
-}
 
 function insertObject(req, res, next) {
 	console.log("[DEBUG] INSERT INTO "  + req.body.type);
@@ -179,7 +120,6 @@ function insertObject(req, res, next) {
 }
 
 module.exports = {
-	lookupPost: lookupPost,
-	insertObject: insertObject,
-	lookupObjects: lookupObjects
+	dbLookup: dbLookup,
+	insertObject: insertObject
 };
