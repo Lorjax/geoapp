@@ -42,10 +42,10 @@ function dbLookup(req, res, next) {
 
 
 function insertObject(req, res, next) {
-	console.log("[DEBUG] INSERT INTO "  + req.body.type);
+	console.log("[DEBUG] INSERT INTO "  + req.params.table);
 	var sql = "INSERT INTO ";
 	var data = [];
-	switch(req.body.type) {
+	switch(req.params.table) {
 		case 'graffiti':
 			sql += "graffiti VALUES(DEFAULT,$1,$2,$3,$4,$5,$6,$7,$8) RETURNING id";
 			data = [req.body.oeffentlich, req.body.gegenstand, req.body.sittenwidrig,
@@ -82,12 +82,12 @@ function insertObject(req, res, next) {
 			data = [req.body.art, req.body.inhalt, req.body.qualitaet,
 					req.body.latitude, req.body.longitude, req.body.bemerkung];
 			break;
+		default:
+			res.statusCode = 404;
+			return res.json({ errors: "could not find specified table in database!" });
 
 	}
 
-	//var sql = "INSERT INTO " + req.body.type + 
-	//			" VALUES (DEFAULT, $1, $2, $3, $4) RETURNING id";
-	//var data = [req.body.title, req.body.message, req.body.longitude, req.body.latitude];
 	console.log("[DEBUG] Insert-Parameter: \n");
 	console.log(data);
 	console.log("[DEBUG] SQL-Statement: \n");
@@ -102,7 +102,7 @@ function insertObject(req, res, next) {
 			return res.json({ errors: "could not create object!" });
 		}
 
-		var sql = 'SELECT * FROM ' + req.body.type + ' WHERE id = $1';
+		var sql = 'SELECT * FROM ' + req.params.table + ' WHERE id = $1';
 		client.query(sql, [result.rows[0].id], function(err, result) {
 			if(err) {
 				console.error(err);

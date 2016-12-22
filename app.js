@@ -16,16 +16,16 @@ var db = require('./queries');
 // Routes
 var router = express.Router();
 
-router.post('/', upload.single('photo'), jsonParser, db.insertObject, function(req, res) {
+router.post('/:table', upload.single('photo'), jsonParser, db.insertObject, function(req, res) {
 });
 
 router.get('/:table', db.dbLookup, function(req, res) {
 	res.json(req.post);
 });
 
-router.patch('/:id', function(req, res) { });
+// router.patch('/:id', function(req, res) { });
 
-router.delete('/:id', function(req, res) { });
+// router.delete('/:id', function(req, res) { });
 
 app.use('/api', router);
 
