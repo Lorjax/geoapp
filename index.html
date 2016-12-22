@@ -36,16 +36,30 @@
 				crs: L.CRS.EPSG3857,
 				layers: openstreetmap,
 			});
+
+			function onEachFeature(feature, layer) {
+			    if (feature.properties) {
+			    	var popupData = [];
+
+			    	for (var prop in feature.properties) {
+			    		popupData.push(prop + ": " + feature.properties[prop]);
+			    	}
+
+			        layer.bindPopup(popupData.join("<br />"));
+			    }
+			}
 			
 			$.ajax({url: "http://localhost:3000/api/haltestelle",
 					success: function(result) {
-						console.log("Leaflet: \n" + result);
-						L.geoJSON(result).addTo(map);
+						L.geoJSON(result, {
+							onEachFeature: onEachFeature
+						}).addTo(map);
 					}});
 			$.ajax({url: "http://localhost:3000/api/graffiti",
 					success: function(result) {
-						console.log("Leaflet: \n" + result);
-						L.geoJSON(result).addTo(map);
+						L.geoJSON(result, {
+							onEachFeature: onEachFeature
+						}).addTo(map);
 					}});
 
 			
