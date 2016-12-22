@@ -26,44 +26,7 @@
 
 		 
 
-		 <script type="text/javascript">
-		 	var openstreetmap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png',{
-				attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors | '
-				});
-		 	var map = L.map('map',{
-				center: [49.87,8.65],
-				zoom: 15,
-				crs: L.CRS.EPSG3857,
-				layers: openstreetmap,
-			});
-
-			function onEachFeature(feature, layer) {
-			    if (feature.properties) {
-			    	var popupData = [];
-
-			    	for (var prop in feature.properties) {
-			    		popupData.push(prop + ": " + feature.properties[prop]);
-			    	}
-
-			        layer.bindPopup(popupData.join("<br />"));
-			    }
-			}
-			
-			$.ajax({url: "http://localhost:3000/api/haltestelle",
-					success: function(result) {
-						L.geoJSON(result, {
-							onEachFeature: onEachFeature
-						}).addTo(map);
-					}});
-			$.ajax({url: "http://localhost:3000/api/graffiti",
-					success: function(result) {
-						L.geoJSON(result, {
-							onEachFeature: onEachFeature
-						}).addTo(map);
-					}});
-
-			
-		 </script>
+		 <script src="./map.js"></script>
 
 		 
 		 

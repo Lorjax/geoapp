@@ -32,6 +32,9 @@ app.use('/api', router);
 app.get('/', function(req, res) {
 	res.sendFile(path.join(__dirname+'/index.html'));
 });
+app.get('/map.js', function(req, res) {
+	res.sendFile(path.join(__dirname+'/map.js'));
+});
 
 // Listenport definieren
 app.listen(3000, function(){
