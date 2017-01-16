@@ -49,8 +49,8 @@ function insertObject(req, res, next) {
 		case 'graffiti':
 			sql += "graffiti VALUES(DEFAULT,$1,$2,$3,$4,$5,$6,$7,$8) RETURNING id";
 			data = [req.body.oeffentlich, req.body.gegenstand, req.body.sittenwidrig,
-						req.body.ausdehnung, req.body.latitude, req.body.longitude,
-						req.body.beschreibung, req.body.foto];
+						req.body.schriftzug, req.body.latitude, req.body.longitude,
+						req.body.bemerkung, req.body.foto];
 			break;
 
 		case 'illegale_entsorgung':

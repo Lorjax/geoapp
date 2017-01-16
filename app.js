@@ -37,8 +37,8 @@ app.get('/map.js', function(req, res) {
 });
 
 // Listenport definieren
-app.listen(3000, function(){
-	console.log("Server running under port 3000.");
+app.listen(2999, function(){
+	console.log("Server running under port 2999.");
 })
 
 

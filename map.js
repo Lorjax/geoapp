@@ -62,7 +62,7 @@ var myStyle = {
 };
 // Load data via jquery
 // Graffiti
-$.ajax({url: "http://localhost:3000/api/graffiti",
+$.ajax({url: "http://130.83.41.54:2999/api/graffiti",
 	success: function(result) {
 		L.geoJSON(result, {
 			onEachFeature: onEachFeature
@@ -70,7 +70,7 @@ $.ajax({url: "http://localhost:3000/api/graffiti",
 	}});
 
 //illegale_entsorgung
-$.ajax({url: "http://localhost:3000/api/illegale_entsorgung",
+$.ajax({url: "http://130.83.41.54:2999/api/illegale_entsorgung",
 	success: function(result) {
 		L.geoJSON(result, {
 			onEachFeature: onEachFeature,
@@ -78,7 +78,7 @@ $.ajax({url: "http://localhost:3000/api/illegale_entsorgung",
 	}});
 
 // haltestelle
-$.ajax({url: "http://localhost:3000/api/haltestelle",
+$.ajax({url: "http://130.83.41.54:2999/api/haltestelle",
 	success: function(result) {
 		L.geoJSON(result, {
 			onEachFeature: onEachFeature,
@@ -86,7 +86,7 @@ $.ajax({url: "http://localhost:3000/api/haltestelle",
 	}});
 
 // fahrradstaender
-$.ajax({url: "http://localhost:3000/api/fahrradstaender",
+$.ajax({url: "http://130.83.41.54:2999/api/fahrradstaender",
 	success: function(result) {
 		L.geoJSON(result, {
 			onEachFeature: onEachFeature,
@@ -94,7 +94,7 @@ $.ajax({url: "http://localhost:3000/api/fahrradstaender",
 	}});
 
 //strassenschaden
-$.ajax({url: "http://localhost:3000/api/strassenschaden",
+$.ajax({url: "http://130.83.41.54:2999/api/strassenschaden",
 	success: function(result) {
 		L.geoJSON(result, {
 			onEachFeature: onEachFeature,
@@ -102,7 +102,7 @@ $.ajax({url: "http://localhost:3000/api/strassenschaden",
 	}});
 
 // givebox
-$.ajax({url: "http://localhost:3000/api/givebox",
+$.ajax({url: "http://130.83.41.54:2999/api/givebox",
 	success: function(result) {
 		L.geoJSON(result, {
 			onEachFeature: onEachFeature,
