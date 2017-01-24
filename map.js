@@ -18,12 +18,6 @@ var baselayers = {
 	"WebAtlas-Light": webatlas
 }
 
-var map = L.map('map',{
-	center: [49.87,8.65],
-	zoom: 15,
-	crs: L.CRS.EPSG3857,
-	layers: openstreetmap,
-});
 
 var haltestellen = new L.LayerGroup();
 var graffiti = new L.LayerGroup();
@@ -40,6 +34,15 @@ var overlays = {
 	"Straßenschäden":strassenschaden,
 	"Giveboxen":givebox
 }
+
+var map = L.map('map',{
+	center: [49.87,8.65],
+	zoom: 15,
+	crs: L.CRS.EPSG3857,
+	layers: [openstreetmap, graffiti, illegale_entsorgung,
+			haltestellen, fahrradstaender, strassenschaden,
+			givebox]
+});
 
 L.control.layers(baselayers, overlays).addTo(map);
 
@@ -62,7 +65,7 @@ var myStyle = {
 };
 // Load data via jquery
 // Graffiti
-$.ajax({url: "http://130.83.41.54:2999/api/graffiti",
+$.ajax({url: "http://localhost:2999/api/graffiti",
 	success: function(result) {
 		L.geoJSON(result, {
 			onEachFeature: onEachFeature
@@ -70,7 +73,7 @@ $.ajax({url: "http://130.83.41.54:2999/api/graffiti",
 	}});
 
 //illegale_entsorgung
-$.ajax({url: "http://130.83.41.54:2999/api/illegale_entsorgung",
+$.ajax({url: "http://localhost:2999/api/illegale_entsorgung",
 	success: function(result) {
 		L.geoJSON(result, {
 			onEachFeature: onEachFeature,
@@ -78,7 +81,7 @@ $.ajax({url: "http://130.83.41.54:2999/api/illegale_entsorgung",
 	}});
 
 // haltestelle
-$.ajax({url: "http://130.83.41.54:2999/api/haltestelle",
+$.ajax({url: "http://localhost:2999/api/haltestelle",
 	success: function(result) {
 		L.geoJSON(result, {
 			onEachFeature: onEachFeature,
@@ -86,7 +89,7 @@ $.ajax({url: "http://130.83.41.54:2999/api/haltestelle",
 	}});
 
 // fahrradstaender
-$.ajax({url: "http://130.83.41.54:2999/api/fahrradstaender",
+$.ajax({url: "http://localhost:2999/api/fahrradstaender",
 	success: function(result) {
 		L.geoJSON(result, {
 			onEachFeature: onEachFeature,
@@ -94,7 +97,7 @@ $.ajax({url: "http://130.83.41.54:2999/api/fahrradstaender",
 	}});
 
 //strassenschaden
-$.ajax({url: "http://130.83.41.54:2999/api/strassenschaden",
+$.ajax({url: "http://localhost:2999/api/strassenschaden",
 	success: function(result) {
 		L.geoJSON(result, {
 			onEachFeature: onEachFeature,
@@ -102,7 +105,7 @@ $.ajax({url: "http://130.83.41.54:2999/api/strassenschaden",
 	}});
 
 // givebox
-$.ajax({url: "http://130.83.41.54:2999/api/givebox",
+$.ajax({url: "http://localhost:2999/api/givebox",
 	success: function(result) {
 		L.geoJSON(result, {
 			onEachFeature: onEachFeature,
