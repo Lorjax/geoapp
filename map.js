@@ -53,22 +53,36 @@ function onEachFeature(feature, layer) {
 		for (var prop in feature.properties) {
 			popupData.push(prop + ": " + feature.properties[prop]);
 		}
-
 		layer.bindPopup(popupData.join("<br />"));
 	}
 }
 
-var myStyle = {
-    "color": "#ffff00",
-    "weight": 5,
-    "opacity": 0.65
-};
+
 // Load data via jquery
 // Graffiti
 $.ajax({url: "http://localhost:2999/api/graffiti",
 	success: function(result) {
 		L.geoJSON(result, {
-			onEachFeature: onEachFeature
+			pointToLayer: function(feature, latlng) {
+				var icon = new L.Icon({
+					iconSize: [25, 41],
+					iconAnchor: [12, 40],
+					popupAnchor: [1, -32],
+					iconUrl: 'icons/rot-graffiti.png'
+				});
+				return L.marker(latlng, {icon: icon});
+			},
+			onEachFeature: function(feature, layer) {
+				if (feature.properties) {
+					var popupData = ["<h2>Graffiti</h2>"];
+
+					for (var prop in feature.properties) {
+						popupData.push(prop + ": " + feature.properties[prop]);
+					}
+					popupData.splice(1,1);
+					layer.bindPopup(popupData.join("<br />"));
+				}
+			}
 		}).addTo(graffiti);
 	}});
 
@@ -76,7 +90,26 @@ $.ajax({url: "http://localhost:2999/api/graffiti",
 $.ajax({url: "http://localhost:2999/api/illegale_entsorgung",
 	success: function(result) {
 		L.geoJSON(result, {
-			onEachFeature: onEachFeature,
+			pointToLayer: function(feature, latlng) {
+				var icon = new L.Icon({
+					iconSize: [25, 41],
+					iconAnchor: [12, 40],
+					popupAnchor: [1, -32],
+					iconUrl: 'icons/gruen-illegaleEntsorgung.png'
+				});
+				return L.marker(latlng, {icon: icon});
+			},
+			onEachFeature: function(feature, layer) {
+				if (feature.properties) {
+					var popupData = ["<h2>Illegale Entsorgung</h2>"];
+
+					for (var prop in feature.properties) {
+						popupData.push(prop + ": " + feature.properties[prop]);
+					}
+					popupData.splice(1,1);
+					layer.bindPopup(popupData.join("<br />"));
+				}
+			}
 		}).addTo(illegale_entsorgung);
 	}});
 
@@ -84,7 +117,26 @@ $.ajax({url: "http://localhost:2999/api/illegale_entsorgung",
 $.ajax({url: "http://localhost:2999/api/haltestelle",
 	success: function(result) {
 		L.geoJSON(result, {
-			onEachFeature: onEachFeature,
+			pointToLayer: function(feature, latlng) {
+				var icon = new L.Icon({
+					iconSize: [25, 41],
+					iconAnchor: [12, 40],
+					popupAnchor: [1, -32],
+					iconUrl: 'icons/gelb-haltestelle.png'
+				});
+				return L.marker(latlng, {icon: icon});
+			},
+			onEachFeature: function(feature, layer) {
+				if (feature.properties) {
+					var popupData = ["<h2>Haltestelle</h2>"];
+
+					for (var prop in feature.properties) {
+						popupData.push(prop + ": " + feature.properties[prop]);
+					}
+					popupData.splice(1,1);
+					layer.bindPopup(popupData.join("<br />"));
+				}
+			}
 		}).addTo(haltestellen);
 	}});
 
@@ -92,7 +144,26 @@ $.ajax({url: "http://localhost:2999/api/haltestelle",
 $.ajax({url: "http://localhost:2999/api/fahrradstaender",
 	success: function(result) {
 		L.geoJSON(result, {
-			onEachFeature: onEachFeature,
+			pointToLayer: function(feature, latlng) {
+				var icon = new L.Icon({
+					iconSize: [25, 41],
+					iconAnchor: [12, 40],
+					popupAnchor: [1, -32],
+					iconUrl: 'icons/lila-fahrradstaender.png'
+				});
+				return L.marker(latlng, {icon: icon});
+			},
+			onEachFeature: function(feature, layer) {
+				if (feature.properties) {
+					var popupData = ["<h2>Fahrradständer</h2>"];
+
+					for (var prop in feature.properties) {
+						popupData.push(prop + ": " + feature.properties[prop]);
+					}
+					popupData.splice(1,1);
+					layer.bindPopup(popupData.join("<br />"));
+				}
+			}
 		}).addTo(fahrradstaender);
 	}});
 
@@ -100,7 +171,26 @@ $.ajax({url: "http://localhost:2999/api/fahrradstaender",
 $.ajax({url: "http://localhost:2999/api/strassenschaden",
 	success: function(result) {
 		L.geoJSON(result, {
-			onEachFeature: onEachFeature,
+			pointToLayer: function(feature, latlng) {
+				var icon = new L.Icon({
+					iconSize: [25, 41],
+					iconAnchor: [12, 40],
+					popupAnchor: [1, -32],
+					iconUrl: 'icons/blau-strassenschaeden.png'
+				});
+				return L.marker(latlng, {icon: icon});
+			},
+			onEachFeature: function(feature, layer) {
+				if (feature.properties) {
+					var popupData = ["<h2>Straßenschaden</h2>"];
+
+					for (var prop in feature.properties) {
+						popupData.push(prop + ": " + feature.properties[prop]);
+					}
+					popupData.splice(1,1);
+					layer.bindPopup(popupData.join("<br />"));
+				}
+			}
 		}).addTo(strassenschaden);
 	}});
 
@@ -108,6 +198,25 @@ $.ajax({url: "http://localhost:2999/api/strassenschaden",
 $.ajax({url: "http://localhost:2999/api/givebox",
 	success: function(result) {
 		L.geoJSON(result, {
-			onEachFeature: onEachFeature,
+			pointToLayer: function(feature, latlng) {
+				var icon = new L.Icon({
+					iconSize: [25, 41],
+					iconAnchor: [12, 40],
+					popupAnchor: [1, -32],
+					iconUrl: 'icons/hellblau-givebox.png'
+				});
+				return L.marker(latlng, {icon: icon});
+			},
+			onEachFeature: function(feature, layer) {
+				if (feature.properties) {
+					var popupData = ["<h2>Givebox</h2>"];
+
+					for (var prop in feature.properties) {
+						popupData.push(prop + ": " + feature.properties[prop]);
+					}
+					popupData.splice(1,1);
+					layer.bindPopup(popupData.join("<br />"));
+				}
+			}
 		}).addTo(givebox);
 	}});

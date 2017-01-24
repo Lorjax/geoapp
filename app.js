@@ -35,6 +35,8 @@ app.get('/', function(req, res) {
 app.get('/map.js', function(req, res) {
 	res.sendFile(path.join(__dirname+'/map.js'));
 });
+app.use('/icons', express.static(__dirname+'/icons'));
+
 
 // Listenport definieren
 app.listen(2999, function(){
