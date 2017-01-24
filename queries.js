@@ -119,7 +119,19 @@ function insertObject(req, res, next) {
 
 }
 
+function insertPhoto(req, res, next) {
+	console.log("[DEBUG] Name des Fotos vor Upload: " + req.files[0].originalname);
+	console.log("[DEBUG] Name des Fotos nach Upload: " + req.files[0].filename);
+	console.log("[DEBUG] MIME-Type des Fotos: " + req.files[0].mimetype);
+	console.log("[DEBUG] Groesse des Fotos: " + req.files[0].size);
+
+	res.statusCode = 200;
+	res.json({photoId: req.files[0].filename});
+
+}
+
 module.exports = {
 	dbLookup: dbLookup,
-	insertObject: insertObject
+	insertObject: insertObject,
+	insertPhoto: insertPhoto
 };

@@ -16,12 +16,17 @@ var db = require('./queries');
 // Routes
 var router = express.Router();
 
-router.post('/:table', upload.single('photo'), jsonParser, db.insertObject, function(req, res) {
+router.post('/photo/', upload.any(), db.insertPhoto, function(req, res) {
+});
+
+router.post('/:table', jsonParser, db.insertObject, function(req, res) {
 });
 
 router.get('/:table', db.dbLookup, function(req, res) {
 	res.json(req.post);
 });
+
+
 
 // router.patch('/:id', function(req, res) { });
 
@@ -34,6 +39,9 @@ app.get('/', function(req, res) {
 });
 app.get('/map.js', function(req, res) {
 	res.sendFile(path.join(__dirname+'/map.js'));
+});
+app.get('/photo.html', function(req, res) {
+	res.sendFile(path.join(__dirname+'/photo.html'));
 });
 
 // Listenport definieren
