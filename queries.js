@@ -47,38 +47,38 @@ function insertObject(req, res, next) {
 	var data = [];
 	switch(req.params.table) {
 		case 'graffiti':
-			sql += "graffiti VALUES(DEFAULT,$1,$2,$3,$4,$5,$6,$7,$8) RETURNING id";
+			sql += "graffiti VALUES(DEFAULT,$1,$2,$3,$4,$5,$6,DEFAULT,$7,$8) RETURNING id";
 			data = [req.body.oeffentlich, req.body.gegenstand, req.body.sittenwidrig,
 						req.body.schriftzug, req.body.latitude, req.body.longitude,
 						req.body.bemerkung, req.body.foto];
 			break;
 
 		case 'illegale_entsorgung':
-			sql += "illegale_entsorgung VALUES (DEFAULT,$1,$2,$3,$4,$5,$6) RETURNING id";
+			sql += "illegale_entsorgung VALUES (DEFAULT,$1,$2,$3,$4,$5,DEFAULT,$6) RETURNING id";
 			data = [req.body.ort, req.body.art, req.body.volumen, req.body.latitude,
 					req.body.longitude, req.body.bemerkung];
 			break;
 
 		case 'haltestelle':
-			sql += "haltestelle VALUES (DEFAULT,$1,$2,$3,$4,$5) RETURNING id";
+			sql += "haltestelle VALUES (DEFAULT,$1,$2,$3,$4,DEFAULT,$5) RETURNING id";
 			data = [req.body.bezeichnung, req.body.zustand, req.body.latitude,
 					req.body.longitude, req.body.bemerkung];
 			break;
 
 		case 'fahrradstaender':
-			sql += "fahrradstaender VALUES (DEFAULT,$1,$2,$3,$4,$5,$6,$7) RETURNING id";
+			sql += "fahrradstaender VALUES (DEFAULT,$1,$2,$3,$4,$5,$6,DEFAULT,$7) RETURNING id";
 			data = [req.body.anzahl, req.body.art, req.body.diebstaehle, req.body.geschuetzteGegend,
 					req.body.latitude, req.body.longitude, req.body.bemerkung];
 			break;
 
 		case 'strassenschaden':
-			sql += "strassenschaden VALUES (DEFAULT,$1,$2,$3,$4,$5,$6) RETURNING id";
+			sql += "strassenschaden VALUES (DEFAULT,$1,$2,$3,$4,$5,DEFAULT,$6) RETURNING id";
 			data = [req.body.stelle, req.body.groesse, req.body.gefahr, 
 					req.body.latitude, req.body.longitude, req.body.bemerkung];
 			break;
 
 		case 'givebox':
-			sql += "givebox VALUES (DEFAULT,$1,$2,$3,$4,$5,$6) RETURNING id";
+			sql += "givebox VALUES (DEFAULT,$1,$2,$3,$4,$5,DEFAULT,$6) RETURNING id";
 			data = [req.body.art, req.body.inhalt, req.body.qualitaet,
 					req.body.latitude, req.body.longitude, req.body.bemerkung];
 			break;
