@@ -33,6 +33,9 @@ function dbLookup(req, res, next) {
 		for(i = 0; i < results.rows.length; i++) {
 			data.push(results.rows[i])
 		}
+		if(req.headers['accept'] === 'application/json') {
+			return res.json(data)
+		}
 		req.post = geoJson.parse(data, {Point: ['latitude', 'longitude']});
 		console.log("GeoJSON: \n" + JSON.stringify(req.post));
 		next();
@@ -119,7 +122,28 @@ function insertObject(req, res, next) {
 
 }
 
+function deleteObject(req, res, next) {
+	var table = req.params.table;
+	var sql = 'DELETE FROM ' + table + ' WHERE id = $1';
+	console.log("[DEBUG] DELETE: " + sql + " / ID = " + req.params.id);
+
+	client.query(sql, [req.params.id], function(err, result) {
+		if(err) {
+			console.error(err);
+			res.statusCode = 500;
+			return res.json({ errors: "could not retrieve objects from table " + table });
+		} else {
+			res.statusCode = 200;
+			return res.json({success: "entry deleted"});
+		}
+
+
+	});
+
+}
+
 module.exports = {
 	dbLookup: dbLookup,
-	insertObject: insertObject
+	insertObject: insertObject,
+	deleteObject: deleteObject
 };

@@ -23,6 +23,10 @@ router.get('/:table', db.dbLookup, function(req, res) {
 	res.json(req.post);
 });
 
+router.delete('/:table/:id', db.deleteObject, function(req, res) {
+	
+});
+
 // router.patch('/:id', function(req, res) { });
 
 // router.delete('/:id', function(req, res) { });
@@ -34,6 +38,12 @@ app.get('/', function(req, res) {
 });
 app.get('/map.js', function(req, res) {
 	res.sendFile(path.join(__dirname+'/map.js'));
+});
+app.get('/verwaltung.html', function(req, res) {
+	res.sendFile(path.join(__dirname+'/verwaltung.html'));
+});
+app.get('/verwaltung.js', function(req, res) {
+	res.sendFile(path.join(__dirname+'/verwaltung.js'));
 });
 app.use('/icons', express.static(__dirname+'/icons'));
 
